@@ -45,7 +45,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: 16, // Garante alinhamento com os demais elementos
   },
   picker: {
-    height: 50,
+    height: 'auto',
     marginVertical: 5,
     marginHorizontal: 16,
   },
@@ -55,10 +55,28 @@ export const styles = StyleSheet.create({
     marginVertical: 10,
   },
   switchContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginVertical: 10,
-    marginHorizontal: 16,
+    flexDirection: 'row',  
+    alignItems: 'center',  
+    justifyContent: 'space-between',  
+    backgroundColor: '#f5f5f5',  
+    padding: 10,  
+    marginVertical: 5,  
+    borderRadius: 10,  
+    shadowColor: '#000',  
+    shadowOffset: { width: 0, height: 2 },  
+    shadowOpacity: 0.1,  
+    shadowRadius: 4,  
+    elevation: 3,  
+  },
+  switchText: {
+    fontSize: 16,  
+    fontWeight: 'bold',  
+    color: '#333',  
+  },
+  switchStatus: {
+    fontSize: 14,  
+    color: '#666',  
+    marginLeft: 10,  
   },
   buttonContainer: {
     marginVertical: 10,
@@ -105,16 +123,31 @@ export const styles = StyleSheet.create({
     paddingBottom: 20, // Garante espaço extra no final do scroll
   },
   heroImage: {
-    width: "100%",
-    height: 200,
     resizeMode: "contain",
     borderRadius: 10,
     marginVertical: 10,
+    alignSelf: "center",
   },
   infoBox: {
     backgroundColor: "#ddd",
     padding: 10,
     borderRadius: 10,
     marginVertical: 10,
+  },
+  customButton: {
+    backgroundColor: '#007AFF', // Azul vibrante
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginEnd: 16,
+    marginStart: 16,
+    // marginVertical: 10,
+    padding: 10,
+    marginBottom: 10,
+  },
+  buttonText: {
+    color: '#FFF', // Texto branco
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });

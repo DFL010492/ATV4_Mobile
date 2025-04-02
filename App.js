@@ -65,7 +65,11 @@ export default function App() {
   const [message, setMessage] = useState(""); 
   const [opacity, setOpacity] = useState(1); 
   const [showInfo, setShowInfo] = useState(false); 
-  const [liked, setLiked] = useState(false); 
+  const [liked, setLiked] = useState(false);
+  const [used, setUsed] = useState(false);
+  const [showMessage, setShowMessage] = useState(false); // Estado para exibir a mensagem
+  const [imageSize, setImageSize] = useState(200);
+
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -117,7 +121,7 @@ export default function App() {
                 {/* Exibe a imagem com opacidade controlada pelo slider */}
                 <Animated.Image 
                   source={selectedHero[selectedImage]} 
-                  style={[styles.heroImage, { opacity }]} 
+                  style={[styles.heroImage, { opacity, width: imageSize, height: imageSize }]} 
                 />
 
                 {/* Input de texto para mensagem ao herói */}
@@ -127,7 +131,18 @@ export default function App() {
                   value={message}
                   onChangeText={setMessage}
                 />
-
+                
+                {/* Slider para controlar tamanho da imagem */}
+                <Text>Tamanho da imagem: {Math.round(imageSize)} px</Text>
+                <Slider 
+                  style={styles.slider} 
+                  minimumValue={100} 
+                  maximumValue={300} 
+                  step={10}
+                  value={imageSize} 
+                  onValueChange={setImageSize} 
+                />
+                
                 {/* Slider para controlar opacidade da imagem */}
                 <Text>Opacidade: {Math.round(opacity * 100)}%</Text>
                 <Slider 
@@ -140,21 +155,60 @@ export default function App() {
                 />
 
                 {/* Botão para exibir informações */}
-                <Button title="Mostrar informações" onPress={() => setShowInfo(true)} />
+                <TouchableOpacity 
+                  style={styles.customButton} 
+                  onPress={() => setShowInfo(!showInfo)}
+                  activeOpacity={0.7}// Efeito de clique
+                >
+                  <Text style={styles.buttonText}>
+                    {showInfo ? "Oculta Informação" : "Mostrar Informação"}
+                  </Text>
+                </TouchableOpacity>               
 
                 {/* Se "Mostrar informações" for clicado, exibe a descrição */}
                 {showInfo && (
                   <View style={styles.infoBox}>
                     <Text style={styles.cardTitle}>{selectedHero.nome}</Text>
                     <Text style={styles.cardDescription}>{selectedHero.descricao}</Text>
-                    <Text style={styles.cardDescription}>Mensagem: {message || "Nenhuma mensagem"}</Text>
+                  </View>
+                )}
+                {/* Botão para exibir/esconder apenas a mensagem */}
+
+                {/* Coloquei outro tipo de botão aqui */}
+
+                <Button 
+                  title={showMessage ? "Esconder mensagem" : "Mostrar mensagem"} 
+                  onPress={() => setShowMessage(!showMessage)} 
+                />
+
+                {/* Se showMessage for true, exibe apenas a mensagem */}
+                {showMessage && (
+                  <View style={styles.infoBox}>
+                    <Text style={styles.cardTitle}>Mensagem para {selectedHero.nome}:</Text>
+                    <Text style={styles.cardDescription}>{message || "Nenhuma mensagem ainda."}</Text>
                   </View>
                 )}
 
                 {/* Switch para perguntar se gostou */}
                 <View style={styles.switchContainer}>
-                  <Text>Você gosta deste herói?</Text>
-                  <Switch value={liked} onValueChange={setLiked} />
+                  <Text style={styles.switchText}>Você gosta deste herói?</Text>
+
+                  <Switch value={liked} onValueChange={setLiked}/>
+
+                  <Text style={styles.switchStatus}>
+                    {liked ? "😁 Você gosta!" : "😐 Ainda não decidiu..."}
+                  </Text>
+                </View>
+
+                {/* Switch para perguntar se usaria o App */}
+                <View style={styles.switchContainer}>
+                  <Text style={styles.switchText}>Você usaria esse App?</Text>
+
+                  <Switch value={used} onValueChange={setUsed}/>
+
+                  <Text style={styles.switchStatus}>
+                    {used ? "😁 Você gosta!" : "😐 Ainda não decidiu..."}
+                  </Text>
                 </View>
               </>
             }
